@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Zap, Mail, Phone, MapPin, Github, Linkedin } from "lucide-react";
+import { Zap, Mail, Phone, MapPin, Github } from "lucide-react";
 
 export default function Footer() {
   const links = ["Home", "Model", "Appliance", "History", "About Us", "Contact"];
@@ -126,10 +126,10 @@ export default function Footer() {
             </div>
 
             <div className="flex gap-2 mt-3">
-              {[Github, Linkedin].map((Icon, i) => (
+              {[Github].map((Icon, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href="https://github.com/Deepnarayandas/AI-Electricity-Demand-Forecasting-Project"
                   className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-all"
                 >
                   <Icon size={14} />
