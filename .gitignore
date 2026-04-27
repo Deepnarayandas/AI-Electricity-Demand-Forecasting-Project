@@ -1,55 +1,83 @@
 # =========================
-# 🔐 Environment
-# =========================
-.env
-.env.*
-
-# =========================
-# 📦 Node (Frontend)
-# =========================
-node_modules/
-frontend/node_modules/
-
-# =========================
-# 🧠 Python (Backend)
-# =========================
-venv/
-backend/venv/
-
-__pycache__/
-*.pyc
-
-# =========================
-# 🤖 ML Files
-# =========================
-backend/model/
-backend/*.pkl
-backend/*.h5
-
-# =========================
-# 📊 Dataset (Optional)
-# =========================
-backend/dataset/
-
-# =========================
-# 🏗️ Build Files
-# =========================
-dist/
-build/
-frontend/dist/
-
-# =========================
-# 📊 Logs
-# =========================
-*.log
-
-# =========================
-# 💻 System Files
+# ROOT / GLOBAL
 # =========================
 .DS_Store
 Thumbs.db
+*.log
+*.tmp
+*.swp
+*.swo
 
 # =========================
-# ⚙️ VS Code
+# FRONTEND (React / Vite)
 # =========================
-.vscode/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+
+# Env files
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.production.local
+
+# Build / Coverage
+frontend/coverage/
+
+# IDE files
+frontend/.vscode/
+frontend/.idea/
+
+# =========================
+# BACKEND (Python + Node)
+# =========================
+
+# Python virtual env
+backend/venv/
+backend/env/
+backend/.venv/
+
+# Python cache
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+
+# If subfolders contain pycache
+backend/**/__pycache__/
+
+# Node modules (backend)
+backend/node_modules/
+
+# Env files
+backend/.env
+
+# Database files
+backend/*.db
+backend/*.sqlite3
+
+# Logs
+backend/*.log
+
+# IDE files
+backend/.vscode/
+backend/.idea/
+
+# OS files
+backend/.DS_Store
+
+# =========================
+# OPTIONAL (MODEL FILES)
+# Ignore if too large
+# =========================
+backend/models/*.pkl
+backend/models/*.joblib
+backend/models/*.h5
+backend/models/*.pt
+
+# =========================
+# OPTIONAL DATASET
+# Uncomment if you don't want datasets on GitHub
+# =========================
+# backend/dataset/
