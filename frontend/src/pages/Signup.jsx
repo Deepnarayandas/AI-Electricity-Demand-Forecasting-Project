@@ -11,8 +11,14 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
+    const nameRegex = /^[A-Za-z]{3,}$/; // only letters, min 3 chars
+
     if (!form.name || !form.email || !form.password)
       return toast.error("All fields are required");
+
+    if (!nameRegex.test(form.name))
+      return toast.error("Name must be at least 3 letters and contain only alphabets");
+
     try {
       setLoading(true);
       await toast.promise(API.post("/api/auth/signup", form), {
@@ -111,8 +117,14 @@ const Signup = () => {
                 <input
                   type="text"
                   placeholder="Jane Smith"
+                  value={form.name}
                   className="w-full bg-slate-50 border border-slate-200 rounded-lg pl-9 py-2.5 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (/^[A-Za-z]*$/.test(value)) {
+                      setForm({ ...form, name: value });
+                    }
+                  }}
                 />
               </div>
             </div>
