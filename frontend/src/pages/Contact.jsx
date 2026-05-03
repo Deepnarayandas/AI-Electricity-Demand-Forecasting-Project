@@ -1,43 +1,58 @@
 import { useState } from "react";
 import axios from "axios";
-import { Loader2, Send, Paperclip, CheckCircle } from "lucide-react";
+import { Loader2, Send, CheckCircle } from "lucide-react";
+
+const BASE_URL = "http://localhost:8000";  // ← change to render URL when deploying
 
 const inputClass =
   "w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 text-sm outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition";
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
-  const [file, setFile] = useState(null);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
   const [ticket, setTicket] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleFile = (e) => {
-    setFile(e.target.files[0]);
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
+
     const formData = new FormData();
     Object.keys(form).forEach((key) => formData.append(key, form[key]));
-    if (file) formData.append("file", file);
+
     try {
-      const res = await axios.post("http://localhost:8000/api/contact", formData);
+      const res = await axios.post(`${BASE_URL}/api/contact`, formData);
       setTicket(res.data.ticket_id);
       setForm({ name: "", email: "", subject: "", message: "" });
-      setFile(null);
     } catch (err) {
-      alert("❌ Failed to send message");
+      setError(
+        err.response?.data?.detail || "Failed to send message. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen text-slate-900" style={{ backgroundColor: "#f0f6ff", backgroundImage: "radial-gradient(circle, #bfdbfe 1px, transparent 1px)", backgroundSize: "28px 28px" }}>
+    <div
+      className="min-h-screen text-slate-900"
+      style={{
+        backgroundColor: "#f0f6ff",
+        backgroundImage: "radial-gradient(circle, #bfdbfe 1px, transparent 1px)",
+        backgroundSize: "28px 28px"
+      }}
+    >
       {/* TOP ACCENT */}
       <div className="h-1 w-full bg-gradient-to-r from-blue-600 via-amber-400 to-blue-600" />
 
@@ -45,7 +60,9 @@ export default function Contact() {
 
         {/* HEADER */}
         <div className="text-center mb-10">
-          <p className="text-xs font-bold tracking-widest text-amber-500 uppercase mb-3">Get In Touch</p>
+          <p className="text-xs font-bold tracking-widest text-amber-500 uppercase mb-3">
+            Get In Touch
+          </p>
           <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">
             Contact Support
           </h1>
@@ -63,61 +80,85 @@ export default function Contact() {
               {/* NAME + EMAIL ROW */}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">Full Name</label>
+                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                    Full Name
+                  </label>
                   <input
-                    name="name" value={form.name} onChange={handleChange}
-                    placeholder="John Smith" required className={inputClass}
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="John Smith"
+                    required
+                    className={inputClass}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">Email Address</label>
+                  <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                    Email Address
+                  </label>
                   <input
-                    name="email" value={form.email} onChange={handleChange}
-                    placeholder="john@example.com" required className={inputClass}
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="john@example.com"
+                    required
+                    className={inputClass}
                   />
                 </div>
               </div>
 
               {/* SUBJECT */}
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">Subject</label>
+                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                  Subject
+                </label>
                 <input
-                  name="subject" value={form.subject} onChange={handleChange}
-                  placeholder="Brief description of your issue" required className={inputClass}
+                  name="subject"
+                  value={form.subject}
+                  onChange={handleChange}
+                  placeholder="Brief description of your issue"
+                  required
+                  className={inputClass}
                 />
               </div>
 
               {/* MESSAGE */}
               <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">Message</label>
+                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
+                  Message
+                </label>
                 <textarea
-                  name="message" value={form.message} onChange={handleChange}
-                  placeholder="Describe your issue in detail…" required
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  placeholder="Describe your issue in detail…"
+                  required
                   className={`${inputClass} h-36 resize-none`}
                 />
               </div>
 
-              {/* FILE UPLOAD */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-500 mb-1.5">
-                  Attachment <span className="text-slate-400 font-normal">(optional)</span>
-                </label>
-                <label className="flex items-center gap-3 w-full px-4 py-3 rounded-xl bg-slate-50 border border-dashed border-slate-300 text-slate-500 text-sm cursor-pointer hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 transition">
-                  <Paperclip size={15} />
-                  <span>{file ? file.name : "Click to attach a file"}</span>
-                  <input type="file" onChange={handleFile} className="hidden" />
-                </label>
-              </div>
+              {/* ERROR MESSAGE */}
+              {error && (
+                <div className="px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">
+                  ❌ {error}
+                </div>
+              )}
 
               {/* SUBMIT */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold text-sm shadow-md shadow-blue-200 flex items-center justify-center gap-2 transition-all mt-2"
+                className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700
+                           disabled:opacity-60 text-white font-semibold text-sm
+                           shadow-md shadow-blue-200 flex items-center justify-center
+                           gap-2 transition-all mt-2"
               >
-                {loading
-                  ? <><Loader2 size={16} className="animate-spin" /> Sending…</>
-                  : <><Send size={15} /> Submit Ticket</>}
+                {loading ? (
+                  <><Loader2 size={16} className="animate-spin" /> Sending…</>
+                ) : (
+                  <><Send size={15} /> Submit Ticket</>
+                )}
               </button>
 
             </form>
@@ -129,7 +170,10 @@ export default function Contact() {
                 <CheckCircle size={32} className="text-emerald-500" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-2">Ticket Submitted!</h3>
-              <p className="text-slate-500 text-sm mb-5">Our team will respond to your request shortly.</p>
+              <p className="text-slate-500 text-sm mb-5">
+                Our team will respond to your request shortly.
+                Check your email for confirmation.
+              </p>
 
               <div className="inline-block bg-slate-50 border border-slate-200 rounded-xl px-6 py-3">
                 <p className="text-xs text-slate-400 font-semibold mb-1">Your Ticket ID</p>
@@ -150,7 +194,8 @@ export default function Contact() {
         {/* FOOTER INFO */}
         {!ticket && (
           <p className="text-center text-xs text-slate-400 mt-6">
-            Typical response time: <span className="font-semibold text-slate-500">24–48 hours</span>
+            Typical response time:{" "}
+            <span className="font-semibold text-slate-500">24–48 hours</span>
           </p>
         )}
 

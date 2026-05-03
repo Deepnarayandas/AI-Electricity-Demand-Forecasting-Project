@@ -1,34 +1,77 @@
+# -------------------------------
 # Python cache
+# -------------------------------
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
+# -------------------------------
 # Virtual environment
+# -------------------------------
 venv/
 env/
+.venv/
+.venv_fixed/
 
+# -------------------------------
 # Environment variables
+# -------------------------------
 .env
 
+# -------------------------------
 # Node dependencies
+# -------------------------------
 node_modules/
 
-# Model files (large/generated)
-*.h5
-*.pkl
+# -------------------------------
+# Model files (ignore globally)
+# -------------------------------
+# *.h5
+# *.pkl
 
-# Dataset files (optional if large/private)
+# ✅ BUT allow your backend models folder
+!backend/models/
+!backend/models/*
+!backend/models/**/*.pkl
+!backend/models/**/*.h5
+
+# -------------------------------
+# Dataset files
+# -------------------------------
 dataset/
 *.csv
 
+# -------------------------------
+# Uploads (user-generated files)
+# -------------------------------
+upload/
+
+# -------------------------------
 # Logs
+# -------------------------------
 *.log
 
+# -------------------------------
 # OS files
+# -------------------------------
 .DS_Store
 Thumbs.db
 
+# -------------------------------
 # Editor settings
+# -------------------------------
 .vscode/
 .idea/
+
+# -------------------------------
+# Build / dist
+# -------------------------------
+dist/
+build/
+
+# -------------------------------
+# Misc
+# -------------------------------
+*.sqlite3
+*.db

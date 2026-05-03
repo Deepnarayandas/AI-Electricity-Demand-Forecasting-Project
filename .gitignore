@@ -1,5 +1,5 @@
 # =========================
-# ROOT / GLOBAL
+# GLOBAL
 # =========================
 .DS_Store
 Thumbs.db
@@ -9,75 +9,70 @@ Thumbs.db
 *.swo
 
 # =========================
-# FRONTEND (React / Vite)
+# PYTHON
 # =========================
-frontend/node_modules/
-frontend/dist/
-frontend/.vite/
-frontend/.cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc.*
 
-# Env files
-frontend/.env
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.production.local
-
-# Build / Coverage
-frontend/coverage/
-
-# IDE files
-frontend/.vscode/
-frontend/.idea/
+# Virtual environments (IMPORTANT)
+venv/
+venv_fixed/
+env/
+.venv/
 
 # =========================
-# BACKEND (Python + Node)
+# NODE (backend usage)
 # =========================
-
-# Python virtual env
-backend/venv/
-backend/env/
-backend/.venv/
-
-# Python cache
-backend/__pycache__/
-backend/*.pyc
-backend/*.pyo
-backend/*.pyd
-
-# If subfolders contain pycache
-backend/**/__pycache__/
-
-# Node modules (backend)
-backend/node_modules/
-
-# Env files
-backend/.env
-
-# Database files
-backend/*.db
-backend/*.sqlite3
-
-# Logs
-backend/*.log
-
-# IDE files
-backend/.vscode/
-backend/.idea/
-
-# OS files
-backend/.DS_Store
+node_modules/
+npm-debug.log*
 
 # =========================
-# OPTIONAL (MODEL FILES)
-# Ignore if too large
+# ENV FILES (SECRET)
 # =========================
-backend/models/*.pkl
-backend/models/*.joblib
-backend/models/*.h5
-backend/models/*.pt
+.env
+.env.*
 
 # =========================
-# OPTIONAL DATASET
-# Uncomment if you don't want datasets on GitHub
+# DATABASE
 # =========================
-# backend/dataset/
+*.db
+*.sqlite3
+
+# =========================
+# UPLOADS
+# =========================
+uploads/
+
+# =========================
+# DATASET (optional)
+# =========================
+dataset/
+
+# =========================
+# ML MODELS
+# =========================
+# ✅ KEEP your models (since you are using them)
+!models/
+!models/*.pkl
+!models/*.h5
+
+# =========================
+# CACHE / TEMP
+# =========================
+.cache/
+temp/
+tmp/
+
+# =========================
+# IDE / EDITOR
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# DEPLOYMENT
+# =========================
+.python-version

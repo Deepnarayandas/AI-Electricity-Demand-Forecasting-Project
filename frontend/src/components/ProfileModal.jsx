@@ -21,39 +21,6 @@ const ProfileModal = ({ user, setUser, close }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [close]);
 
-  // const updateName = async () => {
-  //   if (!name) return toast.error("Name cannot be empty");
-  //   try {
-  //     await toast.promise(API.put("/api/update-name", { name, token }), {
-  //       pending: "Updating name...",
-  //       success: "Name updated",
-  //       error: "Failed to update",
-  //     });
-  //     const updated = { ...user, name };
-  //     localStorage.setItem("user", JSON.stringify(updated));
-  //     setUser(updated);
-  //   } catch {}
-  // };
-
-  // const changePassword = async () => {
-  //   if (!oldPass || !newPass) return toast.error("Fill all fields");
-  //   try {
-  //     await toast.promise(
-  //       API.put("/api/change-password", {
-  //         old_password: oldPass,
-  //         new_password: newPass,
-  //         token,
-  //       }),
-  //       {
-  //         pending: "Changing password...",
-  //         success: "Password updated",
-  //         error: "Failed to change",
-  //       }
-  //     );
-  //     setOldPass("");
-  //     setNewPass("");
-  //   } catch {}
-  // };
 const updateName = async () => {
   if (!name) return toast.error("Name cannot be empty");
 
